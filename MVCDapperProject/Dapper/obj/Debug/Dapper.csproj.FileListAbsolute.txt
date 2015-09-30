@@ -1,0 +1,5 @@
+D:\$id\MyGit\Dapper\obj\Debug\Dapper.csprojResolveAssemblyReference.cache
+D:\$id\MyGit\Dapper\bin\Debug\Dapper.dll
+D:\$id\MyGit\Dapper\bin\Debug\Dapper.pdb
+D:\$id\MyGit\Dapper\obj\Debug\Dapper.dll
+D:\$id\MyGit\Dapper\obj\Debug\Dapper.pdb
