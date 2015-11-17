@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Constants>
+  <Role category="CookieName" Value="KarrStyleCookie"/>
+  <Role category="CookieErrorText" Value="Please enable cookies on your browser. The Mighty Milers system needs cookies for it to work."/>
+  <Role category="UserProfile" Value="KarrStyleUserProfile"/>
+  <Role category="HomePageURL" Value="~/Account/Login.aspx"/>
+  <Role category="LogOutURL" Value="~/LogoutPage.aspx"/>
+  <Role category="Maintenance" Value="~/Maintenance.aspx"/>
+  <Role category="AccessDeniedURL" Value="~/AccessDenied.aspx"/>
+</Constants>
