@@ -10,6 +10,9 @@
     <script src="scripts/mycontroller.js" type="text/javascript"></script>
 </head>
 <body ng-app='MyApp'>
+    <button ng-click="counter = counter + 1">Add one</button>
+Current counter: {{ counter }}
+
     <div id='content' ng-controller='MyController'>
         <h1>{{ article}}!!!!</h1>
         <h3>{{ myVar }}</h3>
