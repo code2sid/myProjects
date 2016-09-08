@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using NUnit.Framework;
 using System.Collections;
@@ -22,7 +23,13 @@ namespace STCrawler
         [SetUp]
         public void setup()
         {
-            driver = new FirefoxDriver();
+            
+            Console.WriteLine("Which driver (c/m/i)");
+            var opt = Console.ReadLine();
+            if (opt.ToLower().Contains("m"))
+                driver = new FirefoxDriver();
+            else if (opt.ToLower().Contains("c"))
+                driver = new ChromeDriver(STConfigurations.Default.ChromePath);
         }
 
         public void testConnection()
@@ -53,17 +60,24 @@ namespace STCrawler
                 Console.ReadLine();
                 return;
             }
-            driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$txtEmailID")).SendKeys("61053682");
-            driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$txtPassword")).SendKeys("smile1510");
+
+            Console.WriteLine("Enter username: ");
+            var username = Console.ReadLine();
+            Console.WriteLine("Enter password: ");
+            var password = Utilitiy.ReadLineMasked();
+            if (string.Compare(username, "ruchi") == 0)
+                username = "61053682";
+            driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$txtEmailID")).SendKeys(username);
+            driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$txtPassword")).SendKeys(password);
             driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$CndSignIn")).Click();
             driver.Navigate().GoToUrl(todayTaskPath);
 
-            Console.WriteLine("Response strted.............");
+            //Console.WriteLine("Response strted.............");
 
-            WebRequest request = WebRequest.Create(todayTaskPath);
-            WebResponse response = request.GetResponse();
+            //WebRequest request = WebRequest.Create(todayTaskPath);
+            //WebResponse response = request.GetResponse();
 
-            Console.WriteLine("Gotccha.....................");
+            //Console.WriteLine("Gotccha my Response.........");
 
 
             if (driver.FindElements(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Count > 0)
@@ -75,7 +89,6 @@ namespace STCrawler
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine("Have a break !!!! have a Kit-kat ;)");
                 Console.WriteLine("Do u want to re-run (haan/nahi)");
                 var option = Console.ReadLine();

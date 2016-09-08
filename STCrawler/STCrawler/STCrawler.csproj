@@ -70,6 +70,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserDriver.cs" />
+    <Compile Include="Utility.cs" />
+    <Compile Include="STConfigurations.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>STConfigurations.settings</DependentUpon>
+    </Compile>
     <Compile Include="CookieAwareWebClient.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -80,6 +86,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="STConfigurations.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>STConfigurations.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\nunit.framework.dll" />
