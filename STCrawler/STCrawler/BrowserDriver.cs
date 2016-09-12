@@ -29,7 +29,7 @@ namespace STCrawler
             if (opt.ToLower().Contains("m"))
                 driver = new FirefoxDriver();
             else if (opt.ToLower().Contains("c"))
-                driver = new ChromeDriver(STConfigurations.Default.ChromePath);
+                driver = new ChromeDriver(@"C:\Users\siddharth.gupta\AppData\Local\Google\Chrome SxS\Application");
         }
 
         public void testConnection()
@@ -63,21 +63,26 @@ namespace STCrawler
 
             Console.WriteLine("Enter username: ");
             var username = Console.ReadLine();
-            Console.WriteLine("Enter password: ");
-            var password = Utilitiy.ReadLineMasked();
+            var password ="smile1510";
             if (string.Compare(username, "ruchi") == 0)
                 username = "61053682";
+            else
+            {
+                Console.WriteLine("Enter password: ");
+                password = Utilitiy.ReadLineMasked();
+            }
+            
             driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$txtEmailID")).SendKeys(username);
             driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$txtPassword")).SendKeys(password);
             driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$CndSignIn")).Click();
             driver.Navigate().GoToUrl(todayTaskPath);
 
-            //Console.WriteLine("Response strted.............");
+            Console.WriteLine("Response strted.............");
 
             //WebRequest request = WebRequest.Create(todayTaskPath);
             //WebResponse response = request.GetResponse();
 
-            //Console.WriteLine("Gotccha my Response.........");
+            Console.WriteLine("Gotccha my Response.........");
 
 
             if (driver.FindElements(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Count > 0)
