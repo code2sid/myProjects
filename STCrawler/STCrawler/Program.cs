@@ -1,35 +1,27 @@
-﻿using System.Net;
+﻿using OpenQA.Selenium;
+using System;
+using System.Net;
 
 namespace STCrawler
 {
     class Program
     {
-        public CookieContainer CookieContainer { get; private set; }
+        public static event ConsoleCancelEventHandler CancelKeyPress;
         static void Main(string[] args)
         {
-            string loginurl = "https://www.socialtrade.biz/login.aspx";
-            string secondurl = "https://www.socialtrade.biz/User/TodayTask.aspx#!";
+            ConsoleKeyInfo cki;
 
-            string username = "61053682";
-            string password = "smile1510";
-            //var o = new SecondPageData();
-            //o.GetSecondaryLoginPage(loginurl, secondurl, username, password);
+            Console.Clear();
 
-            //WebBrowser.Navigate("http://www.google.com");
-
-
-            //var p = new scrapping();
-            //p.ProcessRequest(username, password, loginurl, secondurl);
-
+            // Establish an event handler to process key press events.
+            //Console.CancelKeyPress += new ConsoleCancelEventHandler(myHandler);
 
             BrowserDriver m = new BrowserDriver();
             m.setup();
             m.ClickController();
-
-
-
-
         }
+
+      
 
     }
 

@@ -16,13 +16,19 @@ namespace STCrawler
     [Parallelizable]
     class BrowserDriver
     {
+        public static event ConsoleCancelEventHandler CancelKeyPress;
         private IWebDriver driver;
+        public IList<string> allWindowHandles = null;
         string todayTaskPath = "https://www.socialtrade.biz/User/TodayTask.aspx";
         int weLeftOn = 1;
+        int reAttempts = 10;
 
-        [SetUp]
         public void setup()
         {
+
+            Console.Clear();
+            Console.CancelKeyPress += new ConsoleCancelEventHandler(myHandler);
+
 
             Console.WriteLine("Which driver (c/m/i)");
             var opt = Console.ReadLine();
@@ -32,6 +38,8 @@ namespace STCrawler
                 driver = new ChromeDriver(@"C:\Users\siddharth.gupta\AppData\Local\Google\Chrome SxS\Application");
             else
                 driver = new FirefoxDriver();
+
+            Console.Clear();
         }
 
         public void testConnection()
@@ -48,14 +56,14 @@ namespace STCrawler
                 Environment.Exit(0);
             }
 
+
+
         }
 
-        [Test]
         public void ClickController()
         {
-            Console.Write("Do u knw the break number ? ");
-            weLeftOn = int.Parse(Console.ReadLine());
             testConnection();
+
             if (driver.Title.ToLower().Contains("maintenance"))
             {
                 Console.WriteLine("its is in under maintenance !!!!! try out after some time... Bbye !!!!");
@@ -63,6 +71,44 @@ namespace STCrawler
                 return;
             }
 
+            login_GetWork();
+            Console.Clear();
+
+            Console.Write("Pick you option:\n\r 1)Range \n\r 2)Specific Rows ");
+            var opt = Console.ReadLine();
+            Console.Clear();
+
+            if (opt.CompareTo("2") == 0)
+                Console.WriteLine("Enter ur Row Numbers(separated by space): ");
+            else
+                Console.Write("Do u knw the break number ? ");
+
+            var input = Console.ReadLine();
+            Console.Clear();
+
+            var rows = input.Split(' ');
+            try
+            {
+                if (rows.Count() > 1)
+                    ExecuteClicks(rows);
+                else
+                    ExecuteClicks(strt: weLeftOn = int.Parse(rows[0]));
+            }
+            catch (Exception ex)
+            {
+                CloseAll();
+                Console.WriteLine(string.Format("Re-run attempts = {0}", reAttempts));
+                var option = Console.ReadLine();
+                if (option.ToLower().Contains("h"))
+                {
+                    testConnection();
+                    ExecuteClicks(strt: weLeftOn);
+                }
+            }
+        }
+
+        public void login_GetWork()
+        {
             Console.WriteLine("Enter username: ");
             var username = Console.ReadLine();
             var password = "smile1510";
@@ -79,47 +125,20 @@ namespace STCrawler
             driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$CndSignIn")).Click();
             driver.Navigate().GoToUrl(todayTaskPath);
 
-            Console.WriteLine("Response strted.............");
-
-            //WebRequest request = WebRequest.Create(todayTaskPath);
-            //WebResponse response = request.GetResponse();
-
-            Console.WriteLine("Gotccha my Response.........");
-
-
-            if (driver.FindElements(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Count > 0)
+             if (driver.FindElements(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Count > 0)
                 driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Click();
 
-            try
-            {
-                ExecuteClicks(strt: weLeftOn);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Have a break !!!! have a Kit-kat ;)");
-                Console.WriteLine("Do u want to re-run (haan/nahi)");
-                var option = Console.ReadLine();
-                if (option.ToLower().Contains("h"))
-                {
-                    testConnection();
-                    ExecuteClicks(strt: weLeftOn);
-                }
-
-            }
-
-        }//*[@id="ctl00_ContentPlaceHolder1_gvAssignment_ctl03_Panel4"]/a
-        //*[@id="ctl00_ContentPlaceHolder1_gvAssignment_ctl10_Panel4"]
+        }
 
         public void ExecuteClicks(int strt = 1, int stp = 250)
         {
             var linkNo = "0";
             var tabCnt = 0;
-            IList<string> allWindowHandles = null;
             
-            for (int i = strt; i <= stp; i++)
+            for (int myCntr = strt; myCntr <= stp; myCntr++)
             {
-                linkNo = (i + 1).ToString().Length < 2 ? string.Concat("0", i + 1) : (i + 1).ToString();
-                Console.WriteLine(string.Format("clicking row:{0} link", i));
+                linkNo = (myCntr + 1).ToString().Length < 2 ? string.Concat("0", myCntr + 1) : (myCntr + 1).ToString();
+                Console.WriteLine(string.Format("clicking row:{0} link", myCntr));
                 try
                 {
                     allWindowHandles = driver.WindowHandles;
@@ -147,7 +166,52 @@ namespace STCrawler
                 }
                 catch (Exception e)
                 {
-                    weLeftOn = i--;
+                    weLeftOn = myCntr--;
+                    throw;
+
+                }
+            }
+        }
+
+        public void ExecuteClicks(string[] rows)
+        {
+            var linkNo = "0";
+            var tabCnt = 0;
+            int myCntr = 0;
+            foreach(var row in rows)
+            {
+                myCntr = int.Parse(row);
+
+                linkNo = (myCntr + 1).ToString().Length < 2 ? string.Concat("0", myCntr + 1) : (myCntr + 1).ToString();
+                Console.WriteLine(string.Format("clicking row:{0} link", myCntr));
+                try
+                {
+                    allWindowHandles = driver.WindowHandles;
+                    foreach (var item in allWindowHandles)
+                    {
+                        if (item == driver.CurrentWindowHandle)
+                            tabCnt++;
+                    }
+                    if (tabCnt <= 20)
+                    {
+                        driver.FindElement(By.TagName("body")).SendKeys(Keys.Control + "t");
+                        driver.Navigate().GoToUrl(todayTaskPath);
+
+                        if (driver.FindElements(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Count > 0)
+                            driver.FindElement(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Click();
+                    }
+
+                    else
+                    {
+                        driver.FindElement(By.TagName("body")).SendKeys(Keys.Control + "\t");
+                        driver.Navigate().Refresh();
+                        if (driver.FindElements(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Count > 0)
+                            driver.FindElement(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Click();
+                    }
+                }
+                catch (Exception e)
+                {
+                    weLeftOn = myCntr--;
                     throw;
 
                 }
@@ -157,5 +221,32 @@ namespace STCrawler
             }
         }
 
+        public void CloseAll()
+        {
+            Console.WriteLine("Have a break !!!! have a Kit-kat ;)");
+            allWindowHandles = driver.WindowHandles;
+            foreach (var item in allWindowHandles)
+            {
+                if (item.CompareTo(driver.CurrentWindowHandle) > 0)
+                {
+                    driver.SwitchTo().Window(item);
+                    driver.Close();
+                }
+            }
+        }
+
+        protected void myHandler(object sender, ConsoleCancelEventArgs args)
+        {
+            Console.WriteLine("Have a break !!!! have a Kit-kat ;)");
+            allWindowHandles = driver.WindowHandles;
+            foreach (var item in allWindowHandles)
+            {
+                if (item.CompareTo(driver.CurrentWindowHandle) > 0)
+                {
+                    driver.SwitchTo().Window(item);
+                    driver.Close();
+                }
+            }
+        }
     }
 }
