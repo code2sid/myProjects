@@ -23,12 +23,39 @@ namespace STCrawler {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Acer\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\siddharth.gupta\\AppData\\Local\\Google\\Chrome SxS\\Application")]
         public string ChromePath {
             get {
                 return ((string)(this["ChromePath"]));
+            }
+            set {
+                this["ChromePath"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public string ReAttempts {
+            get {
+                return ((string)(this["ReAttempts"]));
+            }
+            set {
+                this["ReAttempts"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30000")]
+        public string SleepBy {
+            get {
+                return ((string)(this["SleepBy"]));
+            }
+            set {
+                this["SleepBy"] = value;
             }
         }
     }

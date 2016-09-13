@@ -70,19 +70,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrowserDriver.cs" />
+    <Compile Include="ProgressBar.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="STConfigurations.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>STConfigurations.settings</DependentUpon>
     </Compile>
-    <Compile Include="CookieAwareWebClient.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="scrapping.cs" />
-    <Compile Include="SecondPageData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
