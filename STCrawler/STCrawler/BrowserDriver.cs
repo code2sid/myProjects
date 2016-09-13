@@ -164,8 +164,6 @@ namespace STCrawler
                 catch (Exception e)
                 {
                     weLeftOn = myCntr--;
-                    throw;
-
                 }
             }
         }
