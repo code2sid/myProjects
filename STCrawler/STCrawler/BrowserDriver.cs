@@ -133,8 +133,11 @@ namespace STCrawler
             Console.Write("Getting todays work...");
             driver.Navigate().GoToUrl(string.Concat(sitePath, "/user/todayTask.aspx"));
 
-            if (driver.FindElements(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Count > 0)
-                driver.FindElement(By.Name("ctl00$ContentPlaceHolder1$cmdGetWork")).Click();
+            if (driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")) != null)
+                driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")).Click();
+
+            if (driver.FindElements(By.Id("ctl00_ContentPlaceHolder1_cmdGetWork")) != null)
+                driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_cmdGetWork")).Click();
 
         }
 
@@ -144,8 +147,7 @@ namespace STCrawler
             if (!driver.PageSource.Contains("TodayTask"))
                 driver.Navigate().GoToUrl(string.Concat(sitePath, "/user/todayTask.aspx"));
 
-            if (driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")) != null)
-                driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")).Click();
+           
             for (int myCntr = strt; myCntr <= stp; myCntr++)
             {
                 linkNo = (myCntr + 1).ToString().Length < 2 ? string.Concat("0", myCntr + 1) : (myCntr + 1).ToString();
