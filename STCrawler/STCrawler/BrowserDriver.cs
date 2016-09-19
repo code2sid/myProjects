@@ -198,8 +198,9 @@ namespace STCrawler
                         driver.Navigate().GoToUrl(sitePath);
                         //*[@id="hand_745413454"]/i
                         //*[@id="hand_745413455"]
-                        if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Count > 0)
-                            driver.FindElement(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Click();
+                        //hand_746313033
+                        if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_{0}']", linkNo))).Count > 0)
+                            driver.FindElement(By.XPath(string.Format("//*[@id='hand_{0}']", linkNo))).Click();
                     }
 
                     else
