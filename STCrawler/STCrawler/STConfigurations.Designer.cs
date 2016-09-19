@@ -25,7 +25,7 @@ namespace STCrawler {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\siddharth.gupta\\AppData\\Local\\Google\\Chrome SxS\\Application")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\siddharth.gupta\\AppData\\Local\\Google\\Chrome SxS\\Application\\")]
         public string ChromePath {
             get {
                 return ((string)(this["ChromePath"]));
@@ -49,13 +49,25 @@ namespace STCrawler {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("55000")]
         public string SleepBy {
             get {
                 return ((string)(this["SleepBy"]));
             }
             set {
                 this["SleepBy"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string SkipRequestWork {
+            get {
+                return ((string)(this["SkipRequestWork"]));
+            }
+            set {
+                this["SkipRequestWork"] = value;
             }
         }
     }

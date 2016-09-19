@@ -20,7 +20,7 @@ namespace STCrawler
         public static event ConsoleCancelEventHandler CancelKeyPress;
         private IWebDriver driver;
         public IList<string> allWindowHandles = null;
-        string sitePath = "https://socialtrade.biz";
+        string sitePath = "https://www.socialtrade.biz/user/TodayTask179.aspx";
         int weLeftOn = 1;
         int reAttempts = 10;
         //public readonly ProgressBar pb = new ProgressBar();
@@ -30,14 +30,19 @@ namespace STCrawler
 
             Console.Clear();
             Console.CancelKeyPress += new ConsoleCancelEventHandler(myHandler);
-
+            ChromeDriverService service = null;
 
             Console.WriteLine("Which driver (c/m/i)");
             var opt = Console.ReadLine();
             if (opt.ToLower().Contains("m"))
                 driver = new FirefoxDriver();
             else if (opt.ToLower().Contains("c"))
+            {
+                service = ChromeDriverService.CreateDefaultService(STConfigurations.Default.ChromePath);
+                service.Port = 90;
                 driver = new ChromeDriver(STConfigurations.Default.ChromePath);
+            }
+
             else
                 driver = new FirefoxDriver();
 
@@ -58,34 +63,26 @@ namespace STCrawler
             login_GetWork();
             Console.Clear();
 
-            Console.Write("Pick you option:\n\r 1)Range \n\r 2)Specific Rows ");
-            var opt = Console.ReadLine();
-            Console.Clear();
-
-            if (opt.CompareTo("2") == 0)
-                Console.WriteLine("Enter ur Row Numbers(separated by space): ");
-            else
-                Console.Write("Do u knw the break number ? ");
-
-            var input = Console.ReadLine();
-            Console.Clear();
-
-
-            var rows = input.Split(' ');
+            var rows = AskOptions();
             try
             {
                 if (rows.Count() > 1)
                     ExecuteClicks(rows);
                 else
-                    ExecuteClicks(strt: weLeftOn = int.Parse(rows[0]), singleTab: true);
+                    ExecuteClicks(strt: weLeftOn = int.Parse(rows[0]), stp: 1, iterator: 1);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(string.Format("Re-run attempts = {0}", reAttempts = int.Parse(STConfigurations.Default.ReAttempts)));
                 testConnection();
                 for (int reAttemCntr = 0; reAttemCntr < reAttempts; reAttemCntr++)
-                    ExecuteClicks(strt: weLeftOn, singleTab: true);
+                    //ExecuteClicks(strt: weLeftOn, singleTab: true);
+                    ExecuteClicks(strt: weLeftOn, stp: 1, iterator: -1);
+                    
             }
+
+
+
         }
 
         public void testConnection()
@@ -123,7 +120,7 @@ namespace STCrawler
 
             Console.Clear();
             Console.Write("Logging-in Please be patient...");
-            driver.Navigate().GoToUrl(string.Concat(sitePath, "/login.aspx"));
+            //driver.Navigate().GoToUrl(string.Concat(sitePath, "/login.aspx"));
 
             driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_txtEmailID']")).SendKeys(username);
             driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_txtPassword']")).SendKeys(password);
@@ -131,13 +128,16 @@ namespace STCrawler
 
             Console.Clear();
             Console.Write("Getting todays work...");
-            driver.Navigate().GoToUrl(string.Concat(sitePath, "/user/todayTask.aspx"));
+            //driver.Navigate().GoToUrl(string.Concat(sitePath, "/user/TodayTask179.aspx"));
 
-            if (driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")) != null)
-                driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")).Click();
+            if (Convert.ToInt16(STConfigurations.Default.SkipRequestWork) == 0)
+            {
+                if (driver.FindElements(By.XPath("//*[@id='w2ui-popup']/div[1]/div")).Count > 0)
+                    driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[1]/div")).Click();
 
-            if (driver.FindElements(By.Id("ctl00_ContentPlaceHolder1_cmdGetWork")) != null)
-                driver.FindElement(By.Id("ctl00_ContentPlaceHolder1_cmdGetWork")).Click();
+                if (driver.FindElements(By.XPath("//*[@id='w2ui-popup']/div[3]/div")).Count > 0)
+                    driver.FindElement(By.XPath("//*[@id='w2ui-popup']/div[3]/div")).Click();
+            }
 
         }
 
@@ -147,7 +147,7 @@ namespace STCrawler
             if (!driver.PageSource.Contains("TodayTask"))
                 driver.Navigate().GoToUrl(string.Concat(sitePath, "/user/todayTask.aspx"));
 
-           
+
             for (int myCntr = strt; myCntr <= stp; myCntr++)
             {
                 linkNo = (myCntr + 1).ToString().Length < 2 ? string.Concat("0", myCntr + 1) : (myCntr + 1).ToString();
@@ -155,12 +155,17 @@ namespace STCrawler
                 try
                 {
                     {
+                        //*[@id="hand_745413613"]
                         if (driver.FindElements(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Count > 0)
                         {
                             driver.FindElement(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Click();
                             Thread.Sleep(int.Parse(STConfigurations.Default.SleepBy));
                         }
+                        else
+                            Console.Write("\r Ohh!!! Its already clicked");
                     }
+
+                    CloseAll();
 
                 }
                 catch (Exception e)
@@ -170,15 +175,15 @@ namespace STCrawler
             }
         }
 
-        public void ExecuteClicks(int strt = 1, int stp = 250)
+        public void ExecuteClicks(int strt , int stp, int iterator)
         {
             var linkNo = "0";
             var tabCnt = 0;
 
-            for (int myCntr = strt; myCntr <= stp; myCntr++)
+            while (strt != stp)
             {
-                linkNo = (myCntr + 1).ToString().Length < 2 ? string.Concat("0", myCntr + 1) : (myCntr + 1).ToString();
-                Console.WriteLine(string.Format("clicking row:{0} link", myCntr));
+                linkNo = (strt + (1 * iterator)).ToString().Length < 2 ? string.Concat("0", strt + (1 * iterator)) : (strt + (1 * iterator)).ToString();
+                Console.WriteLine(string.Format("clicking row:{0} link", strt));
                 try
                 {
                     allWindowHandles = driver.WindowHandles;
@@ -191,25 +196,28 @@ namespace STCrawler
                     {
                         driver.FindElement(By.TagName("body")).SendKeys(Keys.Control + "t");
                         driver.Navigate().GoToUrl(sitePath);
-
-                        if (driver.FindElements(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Count > 0)
-                            driver.FindElement(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Click();
+                        //*[@id="hand_745413454"]/i
+                        //*[@id="hand_745413455"]
+                        if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Count > 0)
+                            driver.FindElement(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Click();
                     }
 
                     else
                     {
                         driver.FindElement(By.TagName("body")).SendKeys(Keys.Control + "\t");
                         driver.Navigate().Refresh();
-                        if (driver.FindElements(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Count > 0)
-                            driver.FindElement(By.XPath(string.Format("//*[@id='ctl00_ContentPlaceHolder1_gvAssignment_ctl{0}_Panel4']/a", linkNo))).Click();
+                        if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Count > 0)
+                            driver.FindElement(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Click();
                     }
                 }
                 catch (Exception e)
                 {
-                    weLeftOn = myCntr--;
+                    weLeftOn = strt--;
                     throw;
 
                 }
+
+                strt += (1 * iterator);
             }
         }
 
@@ -268,11 +276,33 @@ namespace STCrawler
             if (driver.CurrentWindowHandle != null)
                 driver.Close();
             Console.ReadLine();
+
+        }
+
+        public string[] AskOptions()
+        {
+            Console.Write("Pick you option:\n\r 1)Range \n\r 2)Specific Rows ");
+            var opt = Console.ReadLine();
+            Console.Clear();
+
+            if (opt.CompareTo("2") == 0)
+                Console.WriteLine("Enter ur Row Numbers(separated by space): ");
+            else
+                Console.Write("Do u knw the break number ? ");
+
+            var input = Console.ReadLine();
+            Console.Clear();
+
+            return input.Split(' ');
         }
 
         protected void myHandler(object sender, ConsoleCancelEventArgs args)
         {
-            CloseAll();
+            Console.WriteLine("Enter option \n\r1) Close \n\r2) New Run");
+            if (Console.ReadLine() == "1")
+                CloseAll();
+            else
+                AskOptions();
         }
     }
 }

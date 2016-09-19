@@ -3,13 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="ChromePath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\Users\siddharth.gupta\AppData\Local\Google\Chrome SxS\Application</Value>
+      <Value Profile="(Default)">C:\Users\siddharth.gupta\AppData\Local\Google\Chrome SxS\Application\</Value>
     </Setting>
     <Setting Name="ReAttempts" Type="System.String" Scope="User">
       <Value Profile="(Default)">10</Value>
     </Setting>
     <Setting Name="SleepBy" Type="System.String" Scope="User">
-      <Value Profile="(Default)">30000</Value>
+      <Value Profile="(Default)">55000</Value>
+    </Setting>
+    <Setting Name="SkipRequestWork" Type="System.String" Scope="User">
+      <Value Profile="(Default)">1</Value>
     </Setting>
   </Settings>
 </SettingsFile>
