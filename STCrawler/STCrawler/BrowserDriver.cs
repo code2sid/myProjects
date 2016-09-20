@@ -78,7 +78,7 @@ namespace STCrawler
                 for (int reAttemCntr = 0; reAttemCntr < reAttempts; reAttemCntr++)
                     //ExecuteClicks(strt: weLeftOn, singleTab: true);
                     ExecuteClicks(strt: weLeftOn, stp: 1, iterator: -1);
-                    
+
             }
 
 
@@ -110,12 +110,16 @@ namespace STCrawler
             Console.WriteLine("Enter username: ");
             var username = Console.ReadLine();
             var password = "smile1510";
-            if (string.Compare(username, "ruchi") == 0)
-                username = "61053682";
-            else
+
+            switch (username.ToLower())
             {
-                Console.WriteLine("Enter password: ");
-                password = Utilitiy.ReadLineMasked();
+                case "ruchi": { username = "61053682"; password = "smile1510"; break; }
+                case "rmum": { username = "61081007"; password = "qwert123"; break; }
+                default:
+                    {
+                        Console.WriteLine("Enter password: ");
+                        password = Utilitiy.ReadLineMasked(); break;
+                    }
             }
 
             Console.Clear();
@@ -175,11 +179,11 @@ namespace STCrawler
             }
         }
 
-        public void ExecuteClicks(int strt , int stp, int iterator)
+        public void ExecuteClicks(int strt, int stp, int iterator)
         {
             var linkNo = "0";
             var tabCnt = 0;
-
+            IJavaScriptExecutor js = (IJavaScriptExecutor)driver;
             while (strt != stp)
             {
                 linkNo = (strt + (1 * iterator)).ToString().Length < 2 ? string.Concat("0", strt + (1 * iterator)) : (strt + (1 * iterator)).ToString();
@@ -198,17 +202,26 @@ namespace STCrawler
                         driver.Navigate().GoToUrl(sitePath);
                         //*[@id="hand_745413454"]/i
                         //*[@id="hand_745413455"]
-                        //hand_746313033
+                        //*[@id="hand_765186898"]
+                        //hand_765187218
                         if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_{0}']", linkNo))).Count > 0)
+                        {
+                            js.ExecuteScript(string.Format("$('#hand_{0}').addClass('handIcon');", linkNo), null);
+                            js.ExecuteScript(string.Format("$('#hand_{0}').attr('onclick','updateTask({0},this)');", linkNo), null);
                             driver.FindElement(By.XPath(string.Format("//*[@id='hand_{0}']", linkNo))).Click();
+                        }
                     }
 
                     else
                     {
                         driver.FindElement(By.TagName("body")).SendKeys(Keys.Control + "\t");
                         driver.Navigate().Refresh();
-                        if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Count > 0)
-                            driver.FindElement(By.XPath(string.Format("//*[@id='hand_745413{0}']", linkNo))).Click();
+                        if (driver.FindElements(By.XPath(string.Format("//*[@id='hand_{0}']", linkNo))).Count > 0)
+                        {
+                            js.ExecuteScript(string.Format("$('#hand_{0}').addClass('handIcon');", linkNo), null);
+                            js.ExecuteScript(string.Format("$('#hand_{0}').attr('onclick','updateTask({0},this)');", linkNo), null);
+                            driver.FindElement(By.XPath(string.Format("//*[@id='hand_{0}']", linkNo))).Click();
+                        }
                     }
                 }
                 catch (Exception e)
@@ -299,11 +312,11 @@ namespace STCrawler
 
         protected void myHandler(object sender, ConsoleCancelEventArgs args)
         {
-            Console.WriteLine("Enter option \n\r1) Close \n\r2) New Run");
-            if (Console.ReadLine() == "1")
-                CloseAll();
-            else
-                AskOptions();
+            //Console.WriteLine("Enter option \n\r1) Close \n\r2) New Run");
+            //if (Console.ReadLine() == "1")
+            //    CloseAll();
+            //else
+            //    AskOptions();
         }
     }
 }
