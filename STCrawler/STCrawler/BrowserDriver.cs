@@ -13,8 +13,7 @@ using System.Threading;
 
 namespace STCrawler
 {
-    [TestFixture]
-    [Parallelizable]
+    
     class BrowserDriver
     {
         public static event ConsoleCancelEventHandler CancelKeyPress;
