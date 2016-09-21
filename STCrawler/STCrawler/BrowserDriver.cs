@@ -20,8 +20,8 @@ namespace STCrawler
         public static event ConsoleCancelEventHandler CancelKeyPress;
         private IWebDriver driver;
         public IList<string> allWindowHandles = null;
-        string sitePath = "https://www.socialtrade.biz/user/TodayTask179.aspx";
-        int weLeftOn = 1;
+        string sitePath = "https://www.socialtrade.biz/user/TodayTask179.aspx", input = string.Empty;
+        int weLeftOn = 1, iterator = 1;
         int reAttempts = 10;
         //public readonly ProgressBar pb = new ProgressBar();
 
@@ -64,12 +64,13 @@ namespace STCrawler
             Console.Clear();
 
             var rows = AskOptions();
+            Console.Clear();
             try
             {
                 if (rows.Count() > 1)
                     ExecuteClicks(rows);
                 else
-                    ExecuteClicks(strt: weLeftOn = int.Parse(rows[0]), stp: 1, iterator: 1);
+                    ExecuteClicks(strt: weLeftOn = int.Parse(rows[0]), stp: 1, iterator: iterator);
             }
             catch (Exception ex)
             {
@@ -77,7 +78,7 @@ namespace STCrawler
                 testConnection();
                 for (int reAttemCntr = 0; reAttemCntr < reAttempts; reAttemCntr++)
                     //ExecuteClicks(strt: weLeftOn, singleTab: true);
-                    ExecuteClicks(strt: weLeftOn, stp: 1, iterator: -1);
+                    ExecuteClicks(strt: weLeftOn, stp: 1, iterator: iterator);
 
             }
 
@@ -109,12 +110,12 @@ namespace STCrawler
             Console.Clear();
             Console.WriteLine("Enter username: ");
             var username = Console.ReadLine();
-            var password = "smile1510";
+            var password = string.Empty;
 
             switch (username.ToLower())
             {
-                case "ruchi": { username = "61053682"; password = "smile1510"; break; }
-                case "rmum": { username = "61081007"; password = "qwert123"; break; }
+                case "ruchi": { username = "61053682"; password = "smile1510"; input = "784456146"; break; }
+                case "rmum": { username = "61081007"; password = "qwert123"; input = "784604577"; break; }
                 default:
                     {
                         Console.WriteLine("Enter password: ");
@@ -124,7 +125,6 @@ namespace STCrawler
 
             Console.Clear();
             Console.Write("Logging-in Please be patient...");
-            //driver.Navigate().GoToUrl(string.Concat(sitePath, "/login.aspx"));
 
             driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_txtEmailID']")).SendKeys(username);
             driver.FindElement(By.XPath("//*[@id='ctl00_ContentPlaceHolder1_txtPassword']")).SendKeys(password);
@@ -132,7 +132,6 @@ namespace STCrawler
 
             Console.Clear();
             Console.Write("Getting todays work...");
-            //driver.Navigate().GoToUrl(string.Concat(sitePath, "/user/TodayTask179.aspx"));
 
             if (Convert.ToInt16(STConfigurations.Default.SkipRequestWork) == 0)
             {
@@ -296,17 +295,26 @@ namespace STCrawler
         public string[] AskOptions()
         {
             Console.Write("Pick you option:\n\r 1)Range \n\r 2)Specific Rows ");
-            var opt = Console.ReadLine();
+            var opt = Console.Read();
             Console.Clear();
 
-            if (opt.CompareTo("2") == 0)
+            if (!string.IsNullOrEmpty(input) && opt == 1)
+            {
+                Console.Write(string.Format("The start and iterator Values are: {0} and {1}\n Press 1\0 to continue !!!", input, iterator));
+                if (Console.Read() == 0)
+                {
+                    Console.WriteLine("Enter start point: ");
+                    input = Console.ReadLine();
+                    Console.WriteLine("Enter iterator value: ");
+                    iterator = Console.Read();
+                }
+            }
+
+            else if (opt == 2)
+            {
                 Console.WriteLine("Enter ur Row Numbers(separated by space): ");
-            else
-                Console.Write("Do u knw the break number ? ");
-
-            var input = Console.ReadLine();
-            Console.Clear();
-
+                input = Console.ReadLine();
+            }
             return input.Split(' ');
         }
 
