@@ -306,6 +306,10 @@ namespace STCrawler
                     input = Console.ReadLine();
                     Console.WriteLine("Enter iterator value: ");
                     iterator = Console.Read();
+
+
+
+
                 }
             }
 
