@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace STCrawler {
+namespace AdCashCrawler {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "12.0.0.0")]
-    internal sealed partial class STConfigurations : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class ACConfigurations : global::System.Configuration.ApplicationSettingsBase {
         
-        private static STConfigurations defaultInstance = ((STConfigurations)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new STConfigurations())));
+        private static ACConfigurations defaultInstance = ((ACConfigurations)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ACConfigurations())));
         
-        public static STConfigurations Default {
+        public static ACConfigurations Default {
             get {
                 return defaultInstance;
             }
@@ -25,63 +25,37 @@ namespace STCrawler {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
-        public string ReAttempts {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://adscash.in/userpanel/browsing_page_updated.php")]
+        public string AC_URL {
             get {
-                return ((string)(this["ReAttempts"]));
+                return ((string)(this["AC_URL"]));
             }
             set {
-                this["ReAttempts"] = value;
+                this["AC_URL"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("2,4,6,8,9")]
-        public string ScheduledHour {
+        [global::System.Configuration.DefaultSettingValueAttribute("34119123~378984")]
+        public string AC_UsernamePassword {
             get {
-                return ((string)(this["ScheduledHour"]));
+                return ((string)(this["AC_UsernamePassword"]));
             }
             set {
-                this["ScheduledHour"] = value;
+                this["AC_UsernamePassword"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("61053682~smile@15")]
-        public string ST_UsernamePassword {
-            get {
-                return ((string)(this["ST_UsernamePassword"]));
-            }
-            set {
-                this["ST_UsernamePassword"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("R3qPzdrsH5cG9m2Gk0A9ztxvqZzRVZT83vu3/DkvsVwPdxy9hEzVBoZ8g1Y4eeZLCVDkn8P/XLr6aW0fS" +
-            "sJZ6lwthCppneCd7/l98CYuAkBI/dv8ZFssWMZkK9L8fOgtwtSxTzO3p5C1299fzYUtAX/cAl1SbJXuT" +
-            "MJnYPk+96E=")]
+        [global::System.Configuration.DefaultSettingValueAttribute("ur AdCash Code")]
         public string Code {
             get {
                 return ((string)(this["Code"]));
             }
             set {
                 this["Code"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://www.socialtrade.biz/User/MyePoints.aspx")]
-        public string ST_URL {
-            get {
-                return ((string)(this["ST_URL"]));
-            }
-            set {
-                this["ST_URL"] = value;
             }
         }
         
@@ -99,7 +73,7 @@ namespace STCrawler {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("//*[@id=\'ajax-content\']/table[2]/tbody/tr[{0}]/td[4]/span")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string placeholder {
             get {
                 return ((string)(this["placeholder"]));
@@ -111,7 +85,7 @@ namespace STCrawler {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("14")]
+        [global::System.Configuration.DefaultSettingValueAttribute("20")]
         public string ClosePopupsAfter {
             get {
                 return ((string)(this["ClosePopupsAfter"]));
@@ -123,13 +97,13 @@ namespace STCrawler {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("35")]
-        public string PopupWaitTiming {
+        [global::System.Configuration.DefaultSettingValueAttribute("2,4,6,8")]
+        public string ScheduledHour {
             get {
-                return ((string)(this["PopupWaitTiming"]));
+                return ((string)(this["ScheduledHour"]));
             }
             set {
-                this["PopupWaitTiming"] = value;
+                this["ScheduledHour"] = value;
             }
         }
     }
