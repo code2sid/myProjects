@@ -30,7 +30,6 @@
         {
             this.btnNext = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
-            this.hdnPreWord = new System.Windows.Forms.Label();
             this.btnWord = new System.Windows.Forms.Button();
             this.lnkHome = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
@@ -58,16 +57,6 @@
             this.btnPrevious.UseVisualStyleBackColor = true;
             this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             this.btnPrevious.KeyUp += new System.Windows.Forms.KeyEventHandler(this.btnPrevious_KeyUp);
-            // 
-            // hdnPreWord
-            // 
-            this.hdnPreWord.AutoSize = true;
-            this.hdnPreWord.Location = new System.Drawing.Point(64, 28);
-            this.hdnPreWord.Name = "hdnPreWord";
-            this.hdnPreWord.Size = new System.Drawing.Size(67, 13);
-            this.hdnPreWord.TabIndex = 3;
-            this.hdnPreWord.Text = "hdnPreWord";
-            this.hdnPreWord.Visible = false;
             // 
             // btnWord
             // 
@@ -99,7 +88,6 @@
             this.ClientSize = new System.Drawing.Size(666, 319);
             this.Controls.Add(this.lnkHome);
             this.Controls.Add(this.btnWord);
-            this.Controls.Add(this.hdnPreWord);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnNext);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -118,7 +106,6 @@
 
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.Button btnPrevious;
-        private System.Windows.Forms.Label hdnPreWord;
         private System.Windows.Forms.Button btnWord;
         private System.Windows.Forms.LinkLabel lnkHome;
     }

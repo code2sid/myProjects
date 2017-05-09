@@ -10,25 +10,16 @@ namespace iWords
     public partial class RevisionCards : Form
     {
         public DataSet dsWordRepos = new DataSet();
+        int index = 0, preVal = 0;
         public RevisionCards()
         {
             InitializeComponent();
         }
 
-        public void LoadWords(int preWord = 0)
+        public void LoadWords(int index = 0)
         {
-            DataRow dr = null;
-            dsWordRepos.ReadXml(ConfigurationSettings.AppSettings["configurationfilePath"].ToString());
-            int maxCnt = dsWordRepos.Tables[0].Rows.Count - 1;
-            Random rnd = new Random();
-            var rnumber = preWord == 0 ? rnd.Next(0, maxCnt) : preWord;
-            hdnPreWord.Text = rnumber.ToString();
-            int knwCnts = dsWordRepos.Tables[0].Select("KnowThis=1").ToList().Count;
-            int dntKnwCnts = dsWordRepos.Tables[0].Select("KnowThis=0").ToList().Count;
-            dr = dsWordRepos.Tables[0].Rows[rnumber];
-            if (dr != null)
-                btnWord.Text = dr["Title"].ToString();
-
+            dsWordRepos.ReadXml(Application.StartupPath + "\\WordsRepos.xml");
+            btnWord.Text = dsWordRepos.Tables[0].Rows[index]["Title"].ToString();
         }
         private void RevisionCards_Load(object sender, EventArgs e)
         {
@@ -37,13 +28,16 @@ namespace iWords
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            LoadWords();
+            preVal = index;
+            Random r = new Random();
+            while (preVal == index)
+                index = r.Next(0, dsWordRepos.Tables[0].Rows.Count - 1);
+            LoadWords(index);
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            LoadWords(int.Parse(hdnPreWord.Text));
-
+            LoadWords(preVal);
         }
 
         private void btnWord_Click(object sender, EventArgs e)
@@ -56,14 +50,15 @@ namespace iWords
                     if (((Label)item).Name.Equals("lblWord"))
                         ((Label)item).Text = btnWord.Text;
             }
-            wd.Show();
+            SelectOption.Show_Location(this.Location, wd);
+
         }
 
         private void lnkHome_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
-            SelectOption so = new SelectOption();
-            so.Show();
+            SelectOption.Show_Location(this.Location, new SelectOption());
+
         }
 
         private void btnWord_KeyUp(object sender, KeyEventArgs e)

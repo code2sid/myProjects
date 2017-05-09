@@ -35,6 +35,7 @@
             this.lblDontKnowCnt = new System.Windows.Forms.Label();
             this.btnKnow = new System.Windows.Forms.Button();
             this.btnDntKnw = new System.Windows.Forms.Button();
+            this.lnkHome = new System.Windows.Forms.LinkLabel();
             this.SuspendLayout();
             // 
             // lblWord
@@ -62,6 +63,7 @@
             this.lblExample.AutoSize = true;
             this.lblExample.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblExample.Location = new System.Drawing.Point(83, 119);
+            this.lblExample.MaximumSize = new System.Drawing.Size(500, 0);
             this.lblExample.Name = "lblExample";
             this.lblExample.Size = new System.Drawing.Size(46, 17);
             this.lblExample.TabIndex = 2;
@@ -87,7 +89,7 @@
             // 
             // btnKnow
             // 
-            this.btnKnow.Location = new System.Drawing.Point(61, 178);
+            this.btnKnow.Location = new System.Drawing.Point(60, 178);
             this.btnKnow.Name = "btnKnow";
             this.btnKnow.Size = new System.Drawing.Size(97, 23);
             this.btnKnow.TabIndex = 5;
@@ -105,12 +107,25 @@
             this.btnDntKnw.Text = "I don\'t know this";
             this.btnDntKnw.UseVisualStyleBackColor = true;
             this.btnDntKnw.Click += new System.EventHandler(this.btnDntKnw_Click);
+            this.btnDntKnw.KeyUp += new System.Windows.Forms.KeyEventHandler(this.WordDetails_KeyUp);
+            // 
+            // lnkHome
+            // 
+            this.lnkHome.AutoSize = true;
+            this.lnkHome.Location = new System.Drawing.Point(12, 9);
+            this.lnkHome.Name = "lnkHome";
+            this.lnkHome.Size = new System.Drawing.Size(86, 13);
+            this.lnkHome.TabIndex = 7;
+            this.lnkHome.TabStop = true;
+            this.lnkHome.Text = "Return To Home";
+            this.lnkHome.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkHome_LinkClicked);
             // 
             // WordDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(666, 319);
+            this.Controls.Add(this.lnkHome);
             this.Controls.Add(this.btnDntKnw);
             this.Controls.Add(this.btnKnow);
             this.Controls.Add(this.lblDontKnowCnt);
@@ -140,5 +155,6 @@
         private System.Windows.Forms.Label lblDontKnowCnt;
         private System.Windows.Forms.Button btnKnow;
         private System.Windows.Forms.Button btnDntKnw;
+        private System.Windows.Forms.LinkLabel lnkHome;
     }
 }

@@ -17,7 +17,7 @@ namespace iWords
         private void AddWord()
         {
             XmlDocument xmlSchedule = new XmlDocument();
-            xmlSchedule.Load(ConfigurationSettings.AppSettings["configurationfilePath"].ToString());
+            xmlSchedule.Load(Application.StartupPath + "\\WordsRepos.xml");
             XmlElement ParentElement = xmlSchedule.CreateElement("Word");
             XmlElement Title = xmlSchedule.CreateElement("Title"); Title.InnerText = txtWord.Text;
             XmlElement Meaning = xmlSchedule.CreateElement("Meaning"); Meaning.InnerText = txtMeaning.Text;
@@ -28,7 +28,7 @@ namespace iWords
             ParentElement.AppendChild(Example);
             ParentElement.AppendChild(KnowThis);
             xmlSchedule.DocumentElement.AppendChild(ParentElement);
-            xmlSchedule.Save(ConfigurationSettings.AppSettings["configurationfilePath"].ToString());
+            xmlSchedule.Save(Application.StartupPath + "\\WordsRepos.xml");
 
         }
         private void ClearAll()
@@ -55,8 +55,7 @@ namespace iWords
         private void lnkHome_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
-            SelectOption so = new SelectOption();
-            so.Show();
+            SelectOption.Show_Location(this.Location, new SelectOption());
         }
 
 

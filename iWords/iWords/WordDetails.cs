@@ -22,7 +22,7 @@ namespace iWords
         private void WordDetails_Load(object sender, EventArgs e)
         {
 
-            dsWordRepos.ReadXml(ConfigurationSettings.AppSettings["configurationfilePath"].ToString());
+            dsWordRepos.ReadXml(Application.StartupPath + "\\WordsRepos.xml");
             var word = dsWordRepos.Tables[0].Select(string.Format("title='{0}'", lblWord.Text));
             if (word.Length > 0)
             {
@@ -73,11 +73,13 @@ namespace iWords
             if (result.Length > 0)
             {
                 dsWordRepos.Tables[0].Rows[rowIndex]["KnowThis"] = "1";
-                dsWordRepos.WriteXml(ConfigurationSettings.AppSettings["configurationfilePath"].ToString());
+                dsWordRepos.WriteXml(Application.StartupPath + "\\WordsRepos.xml");
             }
 
             lblKnowCnt.Text = dsWordRepos.Tables[0].Select("knowthis='1'").Length.ToString();
             lblDontKnowCnt.Text = dsWordRepos.Tables[0].Select("knowthis='0'").Length.ToString();
+
+            LoadNewWord();
         }
 
         private void btnDntKnw_Click(object sender, EventArgs e)
@@ -88,20 +90,40 @@ namespace iWords
             if (result.Length > 0)
             {
                 dsWordRepos.Tables[0].Rows[rowIndex]["KnowThis"] = "0";
-                dsWordRepos.WriteXml(ConfigurationSettings.AppSettings["configurationfilePath"].ToString());
+                dsWordRepos.WriteXml(Application.StartupPath + "\\WordsRepos.xml");
             }
 
             lblKnowCnt.Text = dsWordRepos.Tables[0].Select("knowthis='1'").Length.ToString();
             lblDontKnowCnt.Text = dsWordRepos.Tables[0].Select("knowthis='0'").Length.ToString();
+
+            LoadNewWord();
 
         }
 
         private void lnkCards_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Hide();
-            RevisionCards rc = new RevisionCards();
-            rc.Show();
+            SelectOption.Show_Location(this.Location, new RevisionCards());
+
         }
 
+        private void LoadNewWord()
+        {
+            int maxCnt = dsWordRepos.Tables[0].Rows.Count - 1;
+            Random rnd = new Random();
+            int rnumber = rnd.Next(0, maxCnt);
+            while (rnumber == rowIndex)
+                rnumber = rnd.Next(0, maxCnt);
+
+            lblWord.Text = dsWordRepos.Tables[0].Rows[rnumber]["Title"].ToString();
+            lblMeaning.Text = dsWordRepos.Tables[0].Rows[rnumber]["Meaning"].ToString();
+            lblExample.Text = dsWordRepos.Tables[0].Rows[rnumber]["Example"].ToString();
+        }
+
+        private void lnkHome_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            this.Hide();
+            SelectOption.Show_Location(this.Location, new SelectOption());
+        }
     }
 }

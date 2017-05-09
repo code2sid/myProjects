@@ -16,15 +16,14 @@ namespace iWords
         private void Revision_Click(object sender, EventArgs e)
         {
             this.Hide();
-            RevisionCards rc = new RevisionCards();
-            rc.Show();
+            SelectOption.Show_Location(this.Location, new RevisionCards());
         }
 
         private void Add_Click(object sender, EventArgs e)
         {
             this.Hide();
-            AddWords aw = new AddWords();
-            aw.Show();
+            SelectOption.Show_Location(this.Location, new AddWords());
+            
         }
 
         private void Revision_KeyUp(object sender, KeyEventArgs e)
@@ -71,6 +70,13 @@ namespace iWords
 
                 this.Update();
             }
+        }
+
+        public static void Show_Location(Point location, Form obj)
+        {
+            obj.Show();
+            obj.Location = location;
+            obj.Update();
         }
     }
 }
