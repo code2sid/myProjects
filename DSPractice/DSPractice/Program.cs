@@ -11,10 +11,50 @@ namespace DSPractice
     {
         static void Main(string[] args)
         {
-
+            Graph();
+            //search();
             //sort();
             //GetHastTable();
 
+
+        }
+
+        static void Graph()
+        {
+            var treeNode = new BinaryTreeNode();
+            treeNode.Data = 14;
+            treeNode.Left = new BinaryTreeNode { Data = 19, Left = new BinaryTreeNode { Data = 33 }, Right = new BinaryTreeNode { Data = 35 } };
+            treeNode.Right = new BinaryTreeNode { Data = 27, Left = new BinaryTreeNode { Data = 42 }, Right = new BinaryTreeNode { Data = 50 } };
+
+            var q = new Queue();
+            q.Enqueue(treeNode);
+            var _current = new BinaryTreeNode();
+            _current = treeNode;
+            try
+            {
+                while (q.Count != 0)
+                {
+                    _current = (BinaryTreeNode)q.Dequeue();
+                    Console.Write(_current.Data + " ");
+                    q.Enqueue(_current.Left);
+                    q.Enqueue(_current.Right);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("");
+            }
+
+
+            Console.Write("Enter no to search: ");
+            var o = new BreadthFirstSearch(treeNode);
+            o.Search(int.Parse(Console.ReadLine()));
+            Console.ReadLine();
+
+        }
+
+        static void search()
+        {
             int[] i = { 14, 33, 27, 10, 35, 19, 42, 44 };
             foreach (var item in i)
                 Console.Write(item + ",");

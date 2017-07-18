@@ -25,22 +25,30 @@ namespace DSPractice
         }
         public bool Search(int data)
         {
-            BinaryTreeNode _current = _root;
-            _searchQueue.Enqueue(_root);
-            while (_searchQueue.Count != 0)
+            try
             {
-                _current = (BinaryTreeNode)_searchQueue.Dequeue();
-                Console.Write(_current.Data + " ");
-                if (_current.Data == data)
+                BinaryTreeNode _current = _root;
+                _searchQueue.Enqueue(_root);
+                while (_searchQueue.Count != 0)
                 {
-                    Console.Write(" Data Found");
-                    return true;
+                    _current = (BinaryTreeNode)_searchQueue.Dequeue();
+                    Console.Write(_current.Data + " ");
+                    if (_current.Data == data)
+                    {
+                        Console.Write(" Data Found");
+                        return true;
+                    }
+                    else
+                    {
+                        _searchQueue.Enqueue(_current.Left);
+                        _searchQueue.Enqueue(_current.Right);
+                    }
                 }
-                else
-                {
-                    _searchQueue.Enqueue(_current.Left);
-                    _searchQueue.Enqueue(_current.Right);
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.Write(" Data Not Found");
+                return false;
             }
             return false;
         }
