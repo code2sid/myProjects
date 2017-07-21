@@ -10,11 +10,11 @@
     <script src="scripts/mycontroller.js" type="text/javascript"></script>
 </head>
 <body ng-app='MyApp'>
-    <button ng-click="counter = counter + 1">Add one</button>
+    <button ng-click="counter = counter +1">Add one</button>
 Current counter: {{ counter }}
 
     <div id='content' ng-controller='MyController'>
-        <h1>{{ article}}!!!!</h1>
+        <h1>{{article}}!!!!</h1>
         <h3>{{ myVar }}</h3>
     </div>
 
@@ -39,7 +39,7 @@ Current counter: {{ counter }}
             </tr>
             <tr ng-repeat="item in items">
                 <td>
-                    <p><b><span ng-bind="item.Name"></span></b>is in our stock.</p>
+                    <p><b><span ng-bind="item.Name"></span></b> is in our stock.</p>
                 </td>
             </tr>
         </table>
