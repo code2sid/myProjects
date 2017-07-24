@@ -75,6 +75,12 @@ Current counter: {{ counter }}
                         <input type="text" ng-model="item.Name" />
                     </td>
                 </tr>
+                 <tr>
+                    <td>Type: </td>
+                    <td>
+                        <select ng-model="item.Type" ng-options="Type for Type in Types"></select>
+                    </td>
+                </tr>
                 <tr>
                     <td>Price(In Rupee): </td>
                     <td>
@@ -95,11 +101,23 @@ Current counter: {{ counter }}
             </table>
         </div>
         <br />
+        <div style="border:double;padding: 5px;display:block;">
+            Order by: <select ng-model="orderField">
+                            <option>ISBN</option>
+                            <option>Name</option>
+                            <option>Type</option>
+                            <option>Price</option>
+                      </select>
+            Descending: <input type="checkbox" ng-model="isOrderDescending" />
+            Name: <input type="text" ng-model="filterstring" />
+        </div>
+
         <div style="padding-top: 15px;display:block;">
             <table border="1" class="mytable">
                 <tr>
                     <td>ISBN</td>
                     <td>Name</td>
+                    <td>Type</td>
                     <td>Price</td>
                     <td>Quantity</td>
                     <td>Total Price</td>
@@ -107,11 +125,15 @@ Current counter: {{ counter }}
                 </tr>
 
 
-                <tr ng-repeat="item in items">
+                <tr ng-repeat="item in items | filter:filterstring | orderBy: GetOrderBy()" >
                     <td>{{item.ISBN}}</td>
                     <td>
-                        <span ng-hide="editMode">{{item.Name}}</span>
+                        <span ng-hide="editMode">{{item.Name | uppercase }}</span>
                         <input type="text" ng-show="editMode" ng-model="item.Name" />
+                    </td>
+                    <td>
+                        <span ng-hide="editMode">{{item.Type}}</span>
+                        <select ng-show="editMode" ng-model="item.Type" ng-options="Type for Type in Types"
                     </td>
                     <td>
                         <span ng-hide="editMode">{{item.Price}}</span>
@@ -132,6 +154,7 @@ Current counter: {{ counter }}
                 </tr>
 
             </table>
+        <div>Uppercase model level Filter: {{ modelfilter}}</div>
         </div>
         <br />
         <div style="font-weight: bold">Grand Total: {{totalPrice()}}</div>
