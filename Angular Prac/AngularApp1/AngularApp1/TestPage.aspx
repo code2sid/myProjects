@@ -61,12 +61,14 @@ Current counter: {{ counter }}
 
     <div ng-controller="BookStore">
         <h2>Add New Book</h2>
+        <form name="bookForm">
         <div style="border: 1px solid blue;">
             <table>
                 <tr>
                     <td>ISBN: </td>
                     <td>
-                        <input type="text" ng-model="item.ISBN" />
+                        <input name="txtISBN" type="text" ng-model="item.ISBN" required />
+                        <span ng-show="bookForm.txtISBN.$invalid">ISBN is mandatory</span>
                     </td>
                 </tr>
                 <tr>
@@ -100,6 +102,7 @@ Current counter: {{ counter }}
                 </tr>
             </table>
         </div>
+            </form>
         <br />
         <div style="border:double;padding: 5px;display:block;">
             Order by: <select ng-model="orderField">

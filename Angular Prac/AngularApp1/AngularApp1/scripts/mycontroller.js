@@ -28,6 +28,12 @@
             return grandTotal;
         };
 
+        $scope.chkvalidation = function () {
+            if (bookForm.txtISBN.$invalid)
+                return true;
+
+        };
+
         $scope.addItem = function (item) {
             $scope.items.splice(0, 0, item);
             $scope.item = {};
