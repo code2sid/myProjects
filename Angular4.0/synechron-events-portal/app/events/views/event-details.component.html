@@ -10,23 +10,23 @@
     </tr>
     <tr>
         <th>Event Code</th>
-        <td><span [innerText]="event.eventCode"></span></td>
+        <td><span [innerText]="event.eventCode | lowercase"></span></td>
     </tr>
     <tr>
         <th>Event Name</th>
-        <td><span [innerText]="event.eventName"></span></td>
+        <td><span [innerText]="event.eventName | uppercase"></span></td>
     </tr>
     <tr>
         <th>Event Description</th>
-        <td><span [innerText]="event.desc"></span></td>
+        <td><span [innerText]="event.desc | firstLetterCapital"></span></td>
     </tr>
     <tr>
         <th>Event Start Date</th>
-        <td><span [innerText]="event.strtDate"></span></td>
+        <td><span [innerText]="event.strtDate | date:'mediumDate'"></span></td>
     </tr>
     <tr>
         <th>Event End Date</th>
-        <td><span [innerText]="event.endDate"></span></td>
+        <td><span [innerText]="event.endDate | date:'mediumDate'"></span></td>
     </tr>
     <tr>
         <th>Attendance</th>
