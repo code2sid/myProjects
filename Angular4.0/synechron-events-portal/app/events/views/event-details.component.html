@@ -1,0 +1,47 @@
+<h1>
+
+    {{pageTitle}}{{event.eventName}}</h1>
+<hr>
+
+<table class="table table-hover table-striped">
+    <tr>
+        <th>Event Id</th>
+        <td><span [innerText]="event.eventId"></span></td>
+    </tr>
+    <tr>
+        <th>Event Code</th>
+        <td><span [innerText]="event.eventCode"></span></td>
+    </tr>
+    <tr>
+        <th>Event Name</th>
+        <td><span [innerText]="event.eventName"></span></td>
+    </tr>
+    <tr>
+        <th>Event Description</th>
+        <td><span [innerText]="event.desc"></span></td>
+    </tr>
+    <tr>
+        <th>Event Start Date</th>
+        <td><span [innerText]="event.strtDate"></span></td>
+    </tr>
+    <tr>
+        <th>Event End Date</th>
+        <td><span [innerText]="event.endDate"></span></td>
+    </tr>
+    <tr>
+        <th>Attendance</th>
+        <td>
+            <div class="progress progress-striped active">
+                <div class="progress-bar" [style.width]="event.attendance +'%'"></div>
+            </div>
+</td>
+</tr>
+
+
+
+
+<tr>
+    <th>Event Logo</th>
+    <td><img [src]="event.logo"></td>
+</tr>
+</table>

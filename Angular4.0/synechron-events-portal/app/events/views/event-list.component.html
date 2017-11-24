@@ -1,0 +1,33 @@
+<h1 [innerText]="pageTitle"></h1>
+<hr>
+<h5 [innerText]="subTitle"></h5>
+<table class="table table table-hover table-striped" *ngIf="events.length>0;else noDataTemplate">
+    <thead>
+        <tr>
+            <th>Event Id</th>
+            <th>Event Code</th>
+            <th>Event Name</th>
+            <th>Start Date</th>
+            <th>Fees</th>
+            <th>logo</th>
+            <th>See Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let event of events">
+            <td><span [innerText]="event.eventId"></span></td>
+            <td><span [innerText]="event.eventName"></span></td>
+            <td><span [innerText]="event.eventCode"></span></td>
+            <td><span [innerText]="event.strtDate"></span></td>
+            <td><span [innerText]="event.fees"></span></td>
+            <td><img [src]="event.logo" [title]="event.eventName" [style.width]="imgWidth" [style.height]="imgHeight" class="img-circle"></td>
+            <td><button class="btn btn-primary" (click)="getSelectedEvent(event)">See Details</button></td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #noDataTemplate>
+    <h3>No Employees Found !!! </h3>
+</ng-template>
+<div class="container-fluid" *ngIf="selectedEvent">
+    <event-details [currentEvent]="selectedEvent"></event-details>
+</div>
