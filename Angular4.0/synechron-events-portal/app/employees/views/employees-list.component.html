@@ -1,0 +1,34 @@
+<h1 [innerText]="pageTitle"></h1>
+<hr>
+<h5 [innerText]="subTitle"></h5>
+<p [innerText]="childMsg"></p>
+<hr>
+<table class="table table-hover table-striped" *ngIf="employees.length>0;else noDataTemplate">
+    <thead>
+        <tr>
+            <th>Emplyoee Id</th>
+            <th>Emplyoee Name</th>
+            <th>Contact</th>
+            <th>Email</th>
+            <th>Photo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let employee of employees">
+            <td><span [innerText]="employee.employeeId"></span></td>
+            <td><span [innerText]="employee.employeeName"></span></td>
+            <td><span [innerText]="employee.contactNumber"></span></td>
+            <td><span [innerText]="employee.email"></span></td>
+            <td><img [src]="employee.photo" [title]="employee.employeeName" [style.width]="imgWidth" [style.height]="imgHeight"
+                    class="img-circle"></td>
+            <td><button class="btn btn-Primary" (click)="getSelectedEmployee(employee)">See Details</button></td>
+
+        </tr>
+    </tbody>
+</table>
+<ng-template #noDataTemplate>
+    <h3>No Employees Found !!! </h3>
+</ng-template>
+<div class="container-fluid" *ngIf="selectedEmployee">
+    <employee-details [currentEmployee]="selectedEmployee" (confirmationMsg)="recievedNotification($event)"></employee-details>
+</div>

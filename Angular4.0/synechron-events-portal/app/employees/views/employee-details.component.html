@@ -1,0 +1,35 @@
+<h1>{{pageTitle}}{{employee.employeeName}}</h1>
+<hr>
+<table class="table table-hover table-striped">
+    <tr>
+        <th>Employee Id:</th>
+        <td><span [innerText]="employee.employeeId"></span></td>
+    </tr>
+    <tr>
+        <th>Employee Name:</th>
+        <td><span [innerText]="employee.employeeName"></span></td>
+    </tr>
+    <tr>
+        <th>Employee Address:</th>
+        <td><span [innerText]="employee.address"></span></td>
+    </tr>
+    <tr>
+        <th>Employee City:</th>
+        <td><span [innerText]="employee.city"></span></td>
+    </tr>
+    <tr>
+        <th>Employee Contact Number:</th>
+        <td><span [innerText]="employee.contactNumber"></span></td>
+    </tr>
+    <tr>
+        <th>Employee Email:</th>
+        <td><span [innerText]="employee.email"></span></td>
+    </tr>
+    <tr>
+        <th>Employee Avatar:</th>
+        <td><img [src]="employee.photo" [alt]="employee.employeeName" [title]="employee.employeeName"></td>
+    </tr>
+</table>
+
+<hr>
+<button class="btn btn-success" (click)="raiseCustomConfirmation()">Send Confirmation</button>
