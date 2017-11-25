@@ -31,7 +31,7 @@
             <td><span [innerText]="event.strtDate | date:'longDate'"></span></td>
             <td><span [innerText]="event.fees | currency:'GBP'"></span></td>
             <td><img [src]="event.logo" [title]="event.eventName" [style.width]="imgWidth" [style.height]="imgHeight" class="img-circle"></td>
-            <td><button class="btn btn-primary" (click)="getSelectedEvent(event)">See Details</button></td>
+            <td><button class="btn btn-primary" (click)="getSelectedEvent(event.eventId)">See Details</button></td>
         </tr>
     </tbody>
 </table>

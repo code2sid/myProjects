@@ -1,20 +1,20 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Employee } from '../models/employee';
+import { EmployeesService } from '../services/employees.service'
 
 @Component({
     selector: 'employees-list',
     templateUrl: '../Views/employees-list.component.html'
 
 })
-export class EmployeeListComponent {
+export class EmployeeListComponent implements OnInit {
     pageTitle: string = "Syn's Employee List";
     subTitle: string = "have fun.. hello world is old.. say wassap world";
     imgWidth: string = "75px";
     imgHeight: string = "50px";
     //  employee: Employee;
     selectedEmployee: Employee;
-
-    constructor() {
+    constructor(private _employeeService: EmployeesService) {
         // this.employee = new Employee();
         // this.employee.employeeId = 12940;
         // this.employee.employeeName = "Siddharth Gupta";
@@ -30,56 +30,16 @@ export class EmployeeListComponent {
         this.childMsg = msg;
 
     }
-    getSelectedEmployee(employee: Employee): void {
-        this.selectedEmployee = employee;
+    getSelectedEmployee(employeeId: number): void {
+        this.selectedEmployee = this._employeeService.getSingleEmployee(employeeId);
+    }
+
+    ngOnInit(): void {
+        this.employees = this._employeeService.getAllEmployees();
     }
 
     employees: Employee[] = [
-        {
-            employeeId: 12940,
-            employeeName: "Siddharth Gupta",
-            address: "Aundh",
-            city: "Pune",
-            contactNumber: "+91 9911911680",
-            email: "sid@syn.com",
-            photo: "images/photo1.png"
-        },
-        {
-            employeeId: 12456,
-            employeeName: "Sridhar",
-            address: "Pune",
-            city: "Pune-city",
-            contactNumber: "+91 9823323336",
-            email: "Sridhar@syn.com",
-            photo: "images/photo1.png"
-        },
-        {
-            employeeId: 12789,
-            employeeName: "Amit",
-            address: "Pune",
-            city: "Pune-city",
-            contactNumber: "+91 7757008884",
-            email: "amit@syn.com",
-            photo: "images/photo1.png"
-        },
-        {
-            employeeId: 12789,
-            employeeName: "Amit",
-            address: "Pune",
-            city: "Pune-city",
-            contactNumber: "+91 123456789",
-            email: "amit@syn.com",
-            photo: "images/photo1.png"
-        },
-        {
-            employeeId: 12456,
-            employeeName: "Sridhar",
-            address: "Pune",
-            city: "Pune-city",
-            contactNumber: "+91 9999628708",
-            email: "Sridhar@syn.com",
-            photo: "images/photo1.png"
-        }
+        // 
 
     ];
 }

@@ -21,7 +21,7 @@
             <td><span [innerText]="employee.email"></span></td>
             <td><img [src]="employee.photo" [title]="employee.employeeName" [style.width]="imgWidth" [style.height]="imgHeight"
                     class="img-circle"></td>
-            <td><button class="btn btn-primary" (click)="getSelectedEmployee(employee)">See Details</button></td>
+            <td><button class="btn btn-primary" (click)="getSelectedEmployee(employee.employeeId)">See Details</button></td>
 
         </tr>
     </tbody>
