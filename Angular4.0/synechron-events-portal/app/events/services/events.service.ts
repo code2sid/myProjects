@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Http } from '@angular/http'
+import { Observable } from 'rxjs'
+import 'rxjs/add/operator/map';
+
 import { Event } from '../models/event';
 
 @Injectable()
 
 export class EventService {
-    getAllEvents(): Event[] {
-        return this.eventsData;
+    constructor(private _http: Http) {
+
     }
 
-    getSingleEvent(id: number): Event {
-       let event:Event=new Event();
-        for (let ev of this.eventsData) {
-            if (ev.eventId == id)
-                event= ev;
-        }
+    getAllEvents(): Observable<Event[]> {
+        return this._http.get("http://localhost:9090/api/events").map(res => res.json());
+    }
 
-        return event;
+    getSingleEvent(id: number): Observable<Event> {
+        return this._http.get("http://localhost:9090/api/events/" + id).map(res => res.json());
 
     }
 
@@ -24,45 +26,45 @@ export class EventService {
             eventId: 101,
             eventCode: 'JQ3SEM',
             eventName: 'jQuery 3.x Seminar',
-            desc: 'Discussion abt new features in jQuery 3.x',
-            strtDate: new Date('12/12/2017'),
+            description: 'Discussion abt new features in jQuery 3.x',
+            startDate: new Date('12/12/2017'),
             endDate: new Date('12/12/2017'),
             fees: 100,
-            attendance: 89,
-            logo: 'images/jq3.png'
+            attendace: 89,
+            logi: 'images/jq3.png'
         },
         {
             eventId: 102,
             eventCode: 'ng4.0SEM',
             eventName: 'Angular 4.0 Seminar',
-            desc: 'Discussion abt new features in Angular 4.0',
-            strtDate: new Date('12/12/2017'),
+            description: 'Discussion abt new features in Angular 4.0',
+            startDate: new Date('12/12/2017'),
             endDate: new Date('12/12/2017'),
             fees: 20,
-            attendance: 30,
-            logo: 'images/ng4.png'
+            attendace: 30,
+            logi: 'images/ng4.png'
         },
         {
             eventId: 103,
             eventCode: 'bootstrapSEM',
             eventName: 'BootStrap  Seminar',
-            desc: 'Discussion abt BootStrap',
-            strtDate: new Date('12/12/2017'),
+            description: 'Discussion abt BootStrap',
+            startDate: new Date('12/12/2017'),
             endDate: new Date('12/12/2017'),
             fees: 50,
-            attendance: 50,
-            logo: 'images/bs.png'
+            attendace: 50,
+            logi: 'images/bs.png'
         },
         {
             eventId: 104,
             eventCode: 'C#Sem',
             eventName: 'C#  Seminar',
-            desc: 'Discussion abt C# and its new features',
-            strtDate: new Date('12/12/2017'),
+            description: 'Discussion abt C# and its new features',
+            startDate: new Date('12/12/2017'),
             endDate: new Date('12/12/2017'),
             fees: 500,
-            attendance: 20,
-            logo: 'images/cs.png'
+            attendace: 20,
+            logi: 'images/cs.png'
         }
     ];
 

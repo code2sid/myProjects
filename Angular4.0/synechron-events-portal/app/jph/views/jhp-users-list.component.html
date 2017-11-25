@@ -1,0 +1,28 @@
+<h1 [innerText]="pageTitle"></h1>
+<hr>
+<!--*ngIf="posts.length>0;else noDataTemplate"-->
+<table class="table table-hover table-striped" >
+    <thead>
+        <tr>
+            <th>UserName</th>
+            <th>EmailId</th>
+            <th>Phone</th>
+            <th>City</th>
+            <th>CompanyName</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let user of users">
+            <td><span [innerText]="user.name"></span></td>
+            <td><span [innerText]="user.email"></span></td>
+            <td><span [innerText]="user.phone"></span></td>
+            <td><span [innerText]="user.address.city"></span></td>
+            <td><a [href]="'http://'+user.website" target="_blank"><span [innerText]="user.company.name"></span></a></td>
+        </tr>
+    </tbody>
+</table>
+<ng-template #noDataTemplate>
+    <h3>No Post Data Found !!! </h3>
+</ng-template>
+<div class="container-fluid" *ngIf="">
+</div>

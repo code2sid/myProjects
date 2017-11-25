@@ -18,11 +18,11 @@
     </tr>
     <tr>
         <th>Event Description</th>
-        <td><span [innerText]="event.desc | firstLetterCapital"></span></td>
+        <td><span [innerText]="event.description | firstLetterCapital"></span></td>
     </tr>
     <tr>
         <th>Event Start Date</th>
-        <td><span [innerText]="event.strtDate | date:'mediumDate'"></span></td>
+        <td><span [innerText]="event.startDate | date:'mediumDate'"></span></td>
     </tr>
     <tr>
         <th>Event End Date</th>
@@ -32,7 +32,7 @@
         <th>Attendance</th>
         <td>
             <div class="progress progress-striped active">
-                <div class="progress-bar" [style.width]="event.attendance +'%'"></div>
+                <div class="progress-bar" [style.width]="event.attendace +'%'"></div>
             </div>
 </td>
 </tr>
@@ -42,6 +42,6 @@
 
 <tr>
     <th>Event Logo</th>
-    <td><img [src]="event.logo"></td>
+    <td><img [src]="event.logi"></td>
 </tr>
 </table>

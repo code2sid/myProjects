@@ -14,19 +14,28 @@ export class EventListComponent implements OnInit {
     imgWidth: string = "75px";
     imgHeight: string = "50px";
     selectedEvent: Event;
-    events:Event[];
+    events: Event[];
 
     getSelectedEvent(eventId: number): void {
-        this.selectedEvent = this._eventsService.getSingleEvent(eventId);
+        this._eventsService.getSingleEvent(eventId).subscribe(
+            data => this.selectedEvent = data,
+            err => console.log(err),
+            () => console.log("Event Service call completed !!")
+
+        );
     }
 
-    constructor (private _eventsService:EventService){
+    constructor(private _eventsService: EventService) {
 
 
     }
- ngOnInit(): void{
+    ngOnInit(): void {
 
-     this.events = this._eventsService.getAllEvents();
- }
+        this._eventsService.getAllEvents().subscribe(
+            data => this.events = data,
+            err => console.log(err),
+            () => console.log("Event Service call completed !! ")
+        );
+    }
 
 }

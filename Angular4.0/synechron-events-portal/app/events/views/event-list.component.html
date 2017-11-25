@@ -28,9 +28,9 @@
             <td><span [innerText]="event.eventId"></span></td>
             <td><span [innerText]="event.eventCode | uppercase"></span></td>
             <td><span [innerText]="event.eventName | lowercase"></span></td>
-            <td><span [innerText]="event.strtDate | date:'longDate'"></span></td>
+            <td><span [innerText]="event.startDate | date:'longDate'"></span></td>
             <td><span [innerText]="event.fees | currency:'GBP'"></span></td>
-            <td><img [src]="event.logo" [title]="event.eventName" [style.width]="imgWidth" [style.height]="imgHeight" class="img-circle"></td>
+            <td><img [src]="event.logi" [title]="event.eventName" [style.width]="imgWidth" [style.height]="imgHeight" class="img-circle"></td>
             <td><button class="btn btn-primary" (click)="getSelectedEvent(event.eventId)">See Details</button></td>
         </tr>
     </tbody>
